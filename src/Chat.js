@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-// import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import Message from "./Message";
 import {
   FormControl,
   TextField,
-  Input,
+  // Input,
   IconButton,
   Link,
 } from "@material-ui/core";
@@ -14,16 +14,14 @@ import SendIcon from "@material-ui/icons/Send";
 import firebase from "firebase";
 import db, { auth } from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
-import "./Chat.css";
+import "./assets/css/Chat.css";
 
 function Chat() {
   const [input, setInput] = useState("");
   const [
     [email],
-    ,
     [username],
     ,
-    [, setActiveComponent],
     [buttonDisabled, setButtonDisabled],
   ] = useContext(UserProfileContext);
   const [messages, setMessages] = useState([]);
@@ -76,7 +74,7 @@ function Chat() {
             setTimeout(() => {
               setButtonDisabled(false);
             }, 4000);
-            setActiveComponent("SignIn");
+            return <Redirect to="/signin" />;
           }}
           disabled={buttonDisabled}
           variant="subtitle1"

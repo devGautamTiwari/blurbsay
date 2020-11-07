@@ -1,41 +1,31 @@
 import React, { useEffect, useContext } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Chat from "./Chat";
-import Auth from "./Auth";
+import SignIn from "./SignIn";
 import { auth } from "./firebase";
 import { UserProfileProvider, UserProfileContext } from "./UserProfileContext";
-import "./App.css";
+import "./assets/css/App.css";
 
 function APP() {
-  const [
-    [, setEmail],
-    ,
-    [, setUsername],
-    [user, setUser],
-    [activeComponent, setActiveComponent],
-  ] = useContext(UserProfileContext);
+  const [[, setEmail], [, setUsername], [user, setUser]] = useContext(
+    UserProfileContext
+  );
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        if (authUser.emailVerified) {
-          setUser(authUser);
-          setEmail(authUser.email);
-          setUsername(authUser.displayName);
-          setActiveComponent("Chat");
-        } else {
-          authUser
-            .sendEmailVerification()
-            .then(() => {
-              alert(`Please verify your email at ${authUser.email}`);
-            })
-            .catch((err) => alert(err.message));
-          auth.signOut();
-        }
+        setUser(authUser);
+        setEmail(authUser.email);
+        setUsername(authUser.displayName);
       } else {
         setUser(null);
         setUsername("");
         setEmail("");
-        setActiveComponent("SignIn");
       }
     });
     return () => {
@@ -45,7 +35,14 @@ function APP() {
 
   return (
     <div className="App">
-      {activeComponent === "Chat" ? <Chat /> : <Auth />}
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {user ? <Chat /> : <Redirect to="signin" />}
+          </Route>
+          <Route exact path="/signin" component={SignIn} />
+        </Switch>
+      </Router>
     </div>
   );
 }

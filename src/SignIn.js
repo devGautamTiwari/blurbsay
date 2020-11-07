@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
 // import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -14,8 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { auth } from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
+import "./assets/css/SignIn.css";
 
-import "./SignIn.css";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -51,35 +51,41 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const [
-    [email, setEmail],
-    [password, setPassword],
-    [,],
-    [,],
-    [, setActiveComponent],
-    [buttonDisabled, setButtonDisabled],
-  ] = useContext(UserProfileContext);
+  const [[email, setEmail], [,], [,]] = useContext(UserProfileContext);
   const [error, setError] = useState([]);
+  const actionCodeSettings = {
+    url: "https://blurbsay.web.app/signin",
+    handleCodeInApp: true,
+  };
+  const [emailSent, setEmailSent] = useState(false);
+  useEffect(() => {
+    if (emailSent) {
+      if (auth.isSignInWithEmailLink(window.location.href)) {
+        setEmail(localStorage.getItem("emailForSignIn"));
+        if (!email) {
+          setEmail(prompt("Please provide your email for confirmation"));
+        } else {
+          auth
+            .signInWithEmailLink(email, window.location.href)
+            .then((authUser) => {
+              localStorage.removeItem("emailForSignIn");
+            })
+            .catch((err) => setError(err));
+        }
+      }
+    }
+    console.log("signin page loading");
+  }, []);
   const signIn = (e) => {
     e.preventDefault();
-    setButtonDisabled(true);
     auth
-      .signInWithEmailAndPassword(email, password)
+      .sendSignInLinkToEmail(email, actionCodeSettings)
       .then((authUser) => {
         setError({});
-        if (!authUser.user.emailVerified) {
-          setError({
-            message: `Please verify your email address at ${authUser.user.email}`,
-          });
-        } else {
-          setPassword("");
-          alert("Signing you in...");
-        }
+        setEmailSent(true);
+        localStorage.setItem("emailForSignIn", email);
       })
       .catch((err) => setError(err));
-    setTimeout(() => {
-      setButtonDisabled(false);
-    }, 3000);
   };
 
   return (
@@ -112,69 +118,22 @@ export default function SignIn() {
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                autoComplete="current-password"
-              />
-            </Grid>
-          </Grid>
-          {/* <FormControlLabel
+            {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={(e) => {
-              signIn(e);
-            }}
-            disabled={buttonDisabled}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link
-                variant="body2"
-                onClick={() => {
-                  setError({});
-                  if (email) {
-                    auth
-                      .sendPasswordResetEmail(email)
-                      .then(() =>
-                        alert("Password reset email sent successfully")
-                      )
-                      .catch((err) => setError(err));
-                  } else {
-                    setError({ message: "You need to enter your email first" });
-                  }
-                }}
-              >
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link
-                variant="body2"
-                onClick={() => setActiveComponent("SignUp")}
-              >
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={(e) => {
+                signIn(e);
+              }}
+              value={emailSent ? "Link sent!" : "Get Sign In Link"}
+              disabled={emailSent}
+            />
           </Grid>
         </form>
       </div>
