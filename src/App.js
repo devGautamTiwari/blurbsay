@@ -12,20 +12,18 @@ import { UserProfileProvider, UserProfileContext } from "./UserProfileContext";
 import "./assets/css/App.css";
 
 function APP() {
-  const [[, setEmail], [, setUsername], [user, setUser]] = useContext(
-    UserProfileContext
-  );
+  const [[, setEmail], [user, setUser]] = useContext(UserProfileContext);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser);
         setEmail(authUser.email);
-        setUsername(authUser.displayName);
+        return <Redirect to="/" />;
       } else {
         setUser(null);
-        setUsername("");
         setEmail("");
+        return <Redirect to="/signin" />;
       }
     });
     return () => {
@@ -38,9 +36,11 @@ function APP() {
       <Router>
         <Switch>
           <Route exact path="/">
-            {user ? <Chat /> : <Redirect to="signin" />}
+            {!user ? <Chat /> : <Redirect to="/signin" />}
           </Route>
-          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/signin">
+            {!user ? <SignIn /> : <Redirect to="/" />}
+          </Route>
         </Switch>
       </Router>
     </div>

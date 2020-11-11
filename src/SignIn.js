@@ -15,13 +15,14 @@ import Container from "@material-ui/core/Container";
 import { auth } from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
 import "./assets/css/SignIn.css";
+import { Redirect } from "react-router-dom";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       {/* <Link color="inherit" href="https://material-ui.com/"> */}
-      Messenger003 {/* </Link>{" "} */}
+      BlurbSay {/* </Link>{" "} */}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -46,12 +47,13 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    // background: "#392061",
   },
 }));
 
 export default function SignIn() {
   const classes = useStyles();
-  const [[email, setEmail], [,], [,]] = useContext(UserProfileContext);
+  const [[email, setEmail]] = useContext(UserProfileContext);
   const [error, setError] = useState([]);
   const actionCodeSettings = {
     url: "https://blurbsay.web.app/signin",
@@ -59,22 +61,22 @@ export default function SignIn() {
   };
   const [emailSent, setEmailSent] = useState(false);
   useEffect(() => {
-    if (emailSent) {
-      if (auth.isSignInWithEmailLink(window.location.href)) {
-        setEmail(localStorage.getItem("emailForSignIn"));
-        if (!email) {
-          setEmail(prompt("Please provide your email for confirmation"));
-        } else {
-          auth
-            .signInWithEmailLink(email, window.location.href)
-            .then((authUser) => {
-              localStorage.removeItem("emailForSignIn");
-            })
-            .catch((err) => setError(err));
-        }
+    // if (emailSent) {
+    if (auth.isSignInWithEmailLink(window.location.href)) {
+      let email_ = window.localStorage.getItem("emailForSignIn");
+      console.log(email);
+      if (!email_) {
+        email_ = prompt("Please provide your email for confirmation");
       }
+      auth
+        .signInWithEmailLink(email_, window.location.href)
+        .then((authUser) => {
+          window.localStorage.removeItem("emailForSignIn");
+          return <Redirect to="/" />;
+        })
+        .catch((err) => setError(err));
     }
-    console.log("signin page loading");
+    // }
   }, []);
   const signIn = (e) => {
     e.preventDefault();
@@ -83,7 +85,7 @@ export default function SignIn() {
       .then((authUser) => {
         setError({});
         setEmailSent(true);
-        localStorage.setItem("emailForSignIn", email);
+        window.localStorage.setItem("emailForSignIn", email);
       })
       .catch((err) => setError(err));
   };
@@ -125,15 +127,16 @@ export default function SignIn() {
             <Button
               type="submit"
               fullWidth
-              variant="contained"
-              color="primary"
+              variant="outlined"
+              color={emailSent ? "secondary" : "primary"}
               className={classes.submit}
               onClick={(e) => {
                 signIn(e);
               }}
-              value={emailSent ? "Link sent!" : "Get Sign In Link"}
-              disabled={emailSent}
-            />
+              // disabled={emailSent}
+            >
+              {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
+            </Button>
           </Grid>
         </form>
       </div>

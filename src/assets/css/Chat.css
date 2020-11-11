@@ -8,6 +8,25 @@
     "."
     ".";
 } */
+
+.chat__masonrygrid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  /* margin-left: -30px; */
+  width: auto;
+}
+.chat__masonrygrid__column {
+  margin-left: 10px;
+  /* padding-left: 30px; */
+  background-clip: padding-box;
+}
+/* Style your items */
+/* .my-masonry-grid_column > div {
+  background: grey;
+  margin-bottom: 30px;
+} */
+
 .chat__welcome {
   display: flex;
   flex-direction: row;
@@ -16,15 +35,17 @@
   width: 100%;
   position: absolute;
   background-color: var(--userMessageColor);
-  color: #000 !important;
+  /* color: #113654 !important; */
+  color: #fffffa !important;
 }
 .chat__form {
-  /* display: none; */
+  display: none;
   padding: 5px;
   position: fixed;
   width: 100%;
   bottom: 0;
   z-index: 1;
+  color: #fffffa !important;
   background-color: var(--userMessageColor);
 }
 .chat__chat {
@@ -35,14 +56,23 @@
   /* height: auto !important; */
   /* overflow-y: scroll; */
 }
+.MuiInputBase-root {
+  color: #fffffa !important;
+}
 .chat__formControl {
   display: flex !important;
   flex-direction: row !important;
 }
 .chat__input {
-  color: #000000 !important;
   flex: 1 !important;
   margin: 15px !important;
+}
+.MuiIconButton-root.Mui-disabled {
+  color: rgba(0, 0, 0, 0.26) !important;
+  background-color: transparent;
+}
+.MuiIconButton-colorPrimary {
+  color: #fffffa !important;
 }
 .chat__iconButton {
   flex: 0 !important;
@@ -51,7 +81,7 @@
 .chat__signout {
   margin-left: auto !important;
   margin-right: 10px !important;
-  color: #ffffff !important;
+  color: hsl(350, 51%, 12%) !important;
   text-decoration-line: none !important;
   background: var(--backgroundColor) !important;
   border-radius: 1.35em !important;
