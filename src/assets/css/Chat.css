@@ -40,12 +40,18 @@
 }
 .chat__form {
   /* display: none; */
-  padding: 5px;
+  padding: 2px;
+  padding-left: 15px !important;
+  margin: 0px !important;
   position: fixed;
+  /* left: 0px; */
+  margin-left: -10px !important;
+  /* right: 0px; */
   width: 100%;
   bottom: 0;
   z-index: 1;
   color: #fffffa !important;
+  border-radius: 1.1em;
   background-color: var(--userMessageColor);
 }
 .chat__chat {
@@ -65,7 +71,7 @@
 }
 .chat__input {
   flex: 1 !important;
-  margin: 15px !important;
+  margin: 8px !important;
 }
 .MuiIconButton-root.Mui-disabled {
   color: rgba(0, 0, 0, 0.26) !important;
@@ -78,9 +84,28 @@
   flex: 0 !important;
   margin-right: 20px !important;
 }
+.chat__signout__icon {
+  height: min-content !important;
+  padding: 0px !important;
+}
+.chat__signout__text {
+  opacity: 0;
+  overflow: hidden;
+  max-width: 0;
+  position: relative;
+  white-space: nowrap;
+  transition: max-width 1s ease-in-out 0.1s, opacity 0.8s ease-in-out;
+}
+.chat__signout:hover .chat__signout__text {
+  opacity: 1;
+  max-width: 250px;
+}
 .chat__signout {
+  max-height: 28px;
+  align-items: center;
   margin-left: auto !important;
   margin-right: 10px !important;
+  display: flex;
   color: hsl(350, 51%, 12%) !important;
   text-decoration-line: none !important;
   background: var(--backgroundColor) !important;

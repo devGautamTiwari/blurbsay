@@ -40,40 +40,31 @@ const Message = forwardRef((props, ref) => {
     );
     setEditMode(false);
   };
-  // useEffect(() => {
-  //   if (!rendered) {
-  //     var blobText = SVG("#text__" + props.id).text(text);
-  //     blobText.attr("dominant-baseline", "middle");
-  //     setRendered(true);
-  //   }
-  // }, []);
-  // useLayoutEffect(() => {
-  //   var topPos, blobPos, onScroll;
-  //   const bindAnimation = () => {
-  //     topPos = (element) => element.getBoundingClientRect().top;
-  //     blobPos = topPos(blobRef.current);
-  //   };
+  const isInViewPort = (ele) => {
+    // const eleBottom = ele.getBoundingClientRect().bottom;
+    const eleTop = ele.getBoundingClientRect().top;
+    const eleOff = eleTop / 2;
+    return eleOff >= -50 && eleOff <= window.innerHeight / 2 - 50;
+    // console.log("eleOff: " + eleOff);
+    // console.log("scrollY: " + window.scrollY);
+    // return eleOff <= window.innerHeight / 2 - 50;
+  };
 
-  //   bindAnimation();
-  //   onScroll = () => {
-  //     const scrollPos = window.scrollY + window.innerHeight;
-  //     if (blobPos < scrollPos) {
-  //       setIsAnimating(true);
-  //     } else if (blobPos >= scrollPos) {
-  //       setIsAnimating(false);
-  //     }
-  //   };
-  //   window.addEventListener("scroll", onScroll);
-  //   const unsubscribe = () => {
-  //     window.removeEventListener("scroll", onScroll);
-  //   };
-  //   return () => window.removeEventListener("scroll", onScroll);
-  //   // return bindAnimation();
-  // }, []);
+  useLayoutEffect(() => {
+    const bindAnimation = () => {
+      const eleInViewPort = isInViewPort(
+        document.querySelector("#blob__" + props.id)
+      );
+      eleInViewPort ? setIsAnimating(true) : setIsAnimating(false);
+      // eleInViewPort ? console.log(true) : console.log(false);
+    };
+    document.addEventListener("scroll", bindAnimation);
+    return () => document.removeEventListener("scroll", bindAnimation);
+  }, []);
 
   return (
     <div ref={ref} className={`message ${isUser && "message__user"}`}>
-      <div className="message__blob">
+      <div className="message__blob" id={`blob__${props.id}`}>
         <svg
           className="message__blobSvg"
           // id="message__blobSvg"

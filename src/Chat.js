@@ -12,6 +12,7 @@ import {
 // import FlipMove from "react-flip-move";
 import Masonry from "react-masonry-css";
 import SendIcon from "@material-ui/icons/Send";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase from "firebase";
 import db, { auth } from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
@@ -132,7 +133,10 @@ function Chat() {
           variant="subtitle1"
           color="primary"
         >
-          Log out
+          <IconButton className="chat__signout__icon" variant="contained">
+            <ExitToAppIcon />
+          </IconButton>
+          <div className="chat__signout__text">Log out</div>
         </Link>
       </div>
       <div className="chat__chat">

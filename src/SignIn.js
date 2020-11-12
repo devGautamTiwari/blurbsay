@@ -112,10 +112,10 @@ export default function SignIn() {
               <TextField
                 className="signin__email"
                 variant="outlined"
+                placeholder="Email Address"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
                 name="email"
                 value={email}
                 onChange={(e) => {
