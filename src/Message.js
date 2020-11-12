@@ -2,6 +2,8 @@ import React, {
   forwardRef,
   useState,
   useRef,
+  useEffect,
+  useLayoutEffect,
   // useLayoutEffect
 } from "react";
 import {
@@ -12,20 +14,22 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { isMobile } from "react-device-detect";
-
+import { SVG } from "@svgdotjs/svg.js";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
 import EditIcon from "@material-ui/icons/Edit";
 import db from "./firebase";
 import animationValues from "./AnimationValues";
 import "./assets/css/Message.css";
+import { Unsubscribe } from "@material-ui/icons";
 
 const Message = forwardRef((props, ref) => {
-  const blobRef = useRef(ref);
+  // const blobRef = useRef(null);
   const [text, setText] = useState(props.message.text);
   const [editMode, setEditMode] = useState(false);
   const isUser = props.email === props.message.email;
   const [isAnimating, setIsAnimating] = useState(true);
+  const [rendered, setRendered] = useState(false);
   const updateMessage = (id, text_) => {
     db.collection("blobs").doc(id).set(
       {
@@ -36,6 +40,13 @@ const Message = forwardRef((props, ref) => {
     );
     setEditMode(false);
   };
+  // useEffect(() => {
+  //   if (!rendered) {
+  //     var blobText = SVG("#text__" + props.id).text(text);
+  //     blobText.attr("dominant-baseline", "middle");
+  //     setRendered(true);
+  //   }
+  // }, []);
   // useLayoutEffect(() => {
   //   var topPos, blobPos, onScroll;
   //   const bindAnimation = () => {
@@ -61,17 +72,16 @@ const Message = forwardRef((props, ref) => {
   // }, []);
 
   return (
-    <div ref={blobRef} id="" className={`message ${isUser && "message__user"}`}>
+    <div ref={ref} className={`message ${isUser && "message__user"}`}>
       <div className="message__blob">
         <svg
           className="message__blobSvg"
-          // width={props.message.blobSize}
-          // height={props.message.blobSize}
+          // id="message__blobSvg"
           viewBox={`0 0 ${props.message.blobSize} ${props.message.blobSize}`}
           // viewBox={`0 0 250 250`}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g>
+          <g id={`text__${props.id}`}>
             <path
               fill={props.message.blobColor}
               transform={`translate(${props.message.blobSize / 2}, ${
@@ -88,16 +98,30 @@ const Message = forwardRef((props, ref) => {
                 begin={`${Math.random()}s`}
               />
             </path>
-            <text
+            {/* <text
               className="message__blobText"
-              dominant-baseline="middle"
-              text-anchor="middle"
+              dominantBaseline="middle"
+              textAnchor="middle"
               transform={`translate(${props.message.blobSize / 2}, ${
                 props.message.blobSize / 2
               })`}
+            ></text> */}
+            <foreignObject
+              // x="10"
+              // y="10"
+              // // transform={`translate(-${props.message.blobSize / 2}, -${
+              // //   props.message.blobSize / 2
+              // // })`}
+              width={props.message.blobSize - 10}
+              height={props.message.blobSize - 10}
             >
-              {text}
-            </text>
+              <p
+                xmlns="http://www.w3.org/1999/xhtml"
+                className="message__blobText"
+              >
+                {text}
+              </p>
+            </foreignObject>
           </g>
         </svg>
       </div>

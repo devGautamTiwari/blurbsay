@@ -19,7 +19,11 @@ import { Redirect } from "react-router-dom";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography
+      variant="body2"
+      // color="textSecondary"
+      align="center"
+    >
       {"Copyright © "}
       {/* <Link color="inherit" href="https://material-ui.com/"> */}
       BlurbSay {/* </Link>{" "} */}
@@ -38,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: "#F9C784",
+    backgroundColor: "#FFF689",
     color: "#000000",
   },
   form: {
@@ -98,7 +102,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign in to BlurbSay
         </Typography>
         <Typography color="error">{error.message}</Typography>
 
@@ -106,6 +110,7 @@ export default function SignIn() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                className="signin__email"
                 variant="outlined"
                 required
                 fullWidth
@@ -125,11 +130,12 @@ export default function SignIn() {
             label="Remember me"
           /> */}
             <Button
+              className="signin__button"
               type="submit"
               fullWidth
-              variant="outlined"
-              color={emailSent ? "secondary" : "primary"}
-              className={classes.submit}
+              variant="contained"
+              // color={emailSent ? "secondary" : "primary"}
+              // className={classes.submit}
               onClick={(e) => {
                 signIn(e);
               }}

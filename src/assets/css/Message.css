@@ -25,6 +25,7 @@
   /* margin-bottom: 12px !important; */
 }
 .message__user > .message__blob > .message__blobSvg {
+  /* animation: floating 3s infinite ease-in-out; */
   border: 0.2px #2e0f14 solid;
 }
 .message__options {
@@ -59,6 +60,8 @@
   text-align: right;
 }
 /* .message__blobSvg {
+  z-index: -1 !important;
+  position: absolute;
 } */
 .message__userCard {
   border-radius: 1.2em !important;
@@ -90,52 +93,66 @@
   flex: 0 !important;
   margin-right: 20px !important;
 }
+/* .message__blobSvg > g > text { */
+foreignObject {
+  padding: 10px;
+}
 .message__blobText {
+  text-anchor: middle;
+  text-align: center;
+  white-space: pre-wrap !important;
+  z-index: 2;
+  display: flex;
+  position: relative;
+  top: 22%;
+  justify-content: center;
   animation: textShadow 1.2s infinite ease-in-out paused,
     floating 3s infinite ease-in-out running;
   font-size: 13px !important;
 }
-.message__blobSvg:hover > g > .message__blobText {
+/* .message__blobSvg:hover > g > text { */
+.message__blobSvg:hover .message__blobText {
   animation-play-state: running, paused;
 }
+
 @keyframes floating {
   0% {
-    transform: translate(50%, 50%);
+    transform: translateY(50%);
   }
   50% {
-    transform: translate(50%, 45%);
+    transform: translateY(20%);
   }
   100% {
-    transform: translate(50%, 50%);
+    transform: translateY(50%);
   }
 }
 
 @keyframes textShadow {
   0% {
-    transform: translate(50%, 50%);
+    transform: translateY(50%);
     text-shadow: 0 0 0 #0c2ffb, 0 0 0 #2cfcfd, 0 0 0 #fb203b, 0 0 0 #fefc4b;
   }
 
   25% {
-    transform: translate(50%, 45%);
+    transform: translateY(42%);
     text-shadow: 0 0.125em 0 #0c2ffb, 0 0.25em 0 #2cfcfd, 0 -0.125em 0 #fb203b,
       0 -0.25em 0 #fefc4b;
   }
 
   50% {
-    transform: translate(50%, 40%);
+    transform: translateY(40%);
     text-shadow: 0 -0.0625em 0 #0c2ffb, 0 -0.125em 0 #2cfcfd,
       0 0.0625em 0 #fb203b, 0 0.125em 0 #fefc4b;
   }
 
   75% {
-    transform: translate(50%, 45%);
+    transform: translateY(42%);
     text-shadow: 0 0.03125em 0 #0c2ffb, 0 0.0625em 0 #2cfcfd,
       0 -0.03125em 0 #fb203b, 0 -0.0625em 0 #fefc4b;
   }
 
   100% {
-    transform: translate(50%, 50%);
+    transform: translateY(50%);
     text-shadow: 0 0 0 #0c2ffb, 0 0 0 #2cfcfd, 0 0 0 #fb203b, 0 0 0 #fefc4b;
   }
 }

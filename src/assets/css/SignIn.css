@@ -1,5 +1,15 @@
-.signin__container{
-    background: #ededed;
-    border-radius: 1.35em;
-    padding-bottom: 20px !important;
+.signin__container {
+  /* background: #e03616 !important; */
+  background: #7e2030 !important;
+  color: aliceblue;
+  border-radius: 1.35em;
+  padding-bottom: 20px !important;
+}
+.signin__email * {
+  color: #fffffa !important;
+}
+.signin__button {
+  margin: 5px !important;
+  background-color: #fff689 !important;
+  color: #222222dd !important;
 }

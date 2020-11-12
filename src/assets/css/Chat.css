@@ -17,7 +17,7 @@
   width: auto;
 }
 .chat__masonrygrid__column {
-  margin-left: 10px;
+  margin: 10px;
   /* padding-left: 30px; */
   background-clip: padding-box;
 }
@@ -39,7 +39,7 @@
   color: #fffffa !important;
 }
 .chat__form {
-  display: none;
+  /* display: none; */
   padding: 5px;
   position: fixed;
   width: 100%;
