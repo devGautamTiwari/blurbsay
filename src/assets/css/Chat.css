@@ -94,7 +94,7 @@
   max-width: 0;
   position: relative;
   white-space: nowrap;
-  transition: max-width 1s ease-in-out 0.1s, opacity 0.8s ease-in-out;
+  transition: max-width 1s ease-in-out, opacity 0.8s ease-in-out;
 }
 .chat__signout:hover .chat__signout__text {
   opacity: 1;

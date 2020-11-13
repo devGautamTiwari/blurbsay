@@ -22,7 +22,9 @@ function Chat() {
   const [input, setInput] = useState("");
   const [[email]] = useContext(UserProfileContext);
   const [messages, setMessages] = useState([]);
+  const [welcomeText, setWelcomeText] = useState("Welcome to BlurbSay!");
   // const messagesEndRef = useRef(null);
+  setTimeout(() => setWelcomeText("BlurbSay"), 60000);
   useEffect(() => {
     const unsubscribe = db
       .collection("blobs")
@@ -34,7 +36,6 @@ function Chat() {
         );
         // messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
       });
-
     return () => unsubscribe();
 
     // setUsername(user.displayName);
@@ -122,7 +123,7 @@ function Chat() {
             marginLeft: "18px",
           }}
         >
-          Welcome to BlurbSay!
+          {welcomeText}
         </h2>
         <Link
           className="chat__signout"
