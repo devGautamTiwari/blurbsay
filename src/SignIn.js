@@ -3,9 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import Checkbox from "@material-ui/core/Checkbox";
-// import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -19,14 +16,9 @@ import { Redirect } from "react-router-dom";
 
 function Copyright() {
   return (
-    <Typography
-      variant="body2"
-      // color="textSecondary"
-      align="center"
-    >
+    <Typography variant="body2" align="center">
       {"Copyright © "}
-      {/* <Link color="inherit" href="https://material-ui.com/"> */}
-      BlurbSay {/* </Link>{" "} */}
+      BlurbSay
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -42,17 +34,15 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    // backgroundColor: "#FFF689",
     backgroundColor: "#ffffff",
     color: "#333333",
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    // background: "#392061",
   },
 }));
 
@@ -66,7 +56,6 @@ export default function SignIn() {
   };
   const [emailSent, setEmailSent] = useState(false);
   useEffect(() => {
-    // if (emailSent) {
     if (auth.isSignInWithEmailLink(window.location.href)) {
       let email_ = window.localStorage.getItem("emailForSignIn");
       console.log(email);
@@ -81,7 +70,6 @@ export default function SignIn() {
         })
         .catch((err) => setError(err));
     }
-    // }
   }, []);
   const signIn = (e) => {
     e.preventDefault();
@@ -126,21 +114,14 @@ export default function SignIn() {
                 autoFocus
               />
             </Grid>
-            {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
             <Button
               className="signin__button"
               type="submit"
               fullWidth
               variant="contained"
-              // color={emailSent ? "secondary" : "primary"}
-              // className={classes.submit}
               onClick={(e) => {
                 signIn(e);
               }}
-              // disabled={emailSent}
             >
               {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
             </Button>

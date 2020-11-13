@@ -1,15 +1,8 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import Message from "./Message";
-import {
-  FormControl,
-  TextField,
-  // Input,
-  IconButton,
-  Link,
-} from "@material-ui/core";
-// import FlipMove from "react-flip-move";
+import { FormControl, TextField, IconButton, Link } from "@material-ui/core";
 import Masonry from "react-masonry-css";
 import SendIcon from "@material-ui/icons/Send";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -23,7 +16,6 @@ function Chat() {
   const [[email]] = useContext(UserProfileContext);
   const [messages, setMessages] = useState([]);
   const [welcomeText, setWelcomeText] = useState("Welcome to BlurbSay!");
-  // const messagesEndRef = useRef(null);
   setTimeout(() => setWelcomeText("BlurbSay"), 60000);
   useEffect(() => {
     const unsubscribe = db
@@ -34,11 +26,8 @@ function Chat() {
         setMessages(
           snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
         );
-        // messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
       });
     return () => unsubscribe();
-
-    // setUsername(user.displayName);
   }, []);
 
   const sendMessage = (e) => {
@@ -46,7 +35,6 @@ function Chat() {
     if (input) {
       db.collection("blobs").add({
         text: input,
-        // username: username,
         blobSize: Math.floor(Math.random() * (225 - 175) + 175),
         blobColor: colors[Math.floor(Math.random() * colors.length)],
         animationClassName:
@@ -152,18 +140,10 @@ function Chat() {
           className="chat__masonrygrid"
           columnClassName="chat__masonrygrid__column"
         >
-          {/* <FlipMove className="chat__flipmove"></FlipMove> */}
           {messages.map(({ id, message }) => (
-            <Message
-              key={id}
-              // username={username}
-              message={message}
-              email={email}
-              id={id}
-            />
+            <Message key={id} message={message} email={email} id={id} />
           ))}
         </Masonry>
-        {/* <div ref={messagesEndRef} /> */}
       </div>
       <div>
         <form className="chat__form">

@@ -1,32 +1,13 @@
-/* .chat__main {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(1fr, 3);
-  gap: 0px 0px;
-  grid-template-areas:
-    "."
-    "."
-    ".";
-} */
-
 .chat__masonrygrid {
-  display: -webkit-box; /* Not needed if autoprefixing */
-  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  /* margin-left: -30px; */
   width: auto;
 }
 .chat__masonrygrid__column {
   margin: 10px;
-  /* padding-left: 30px; */
   background-clip: padding-box;
 }
-/* Style your items */
-/* .my-masonry-grid_column > div {
-  background: grey;
-  margin-bottom: 30px;
-} */
-
 .chat__welcome {
   display: flex;
   flex-direction: row;
@@ -35,18 +16,14 @@
   width: 100%;
   position: absolute;
   background-color: var(--userMessageColor);
-  /* color: #113654 !important; */
   color: #fffffa !important;
 }
 .chat__form {
-  /* display: none; */
   padding: 2px;
   padding-left: 15px !important;
   margin: 0px !important;
   position: fixed;
-  /* left: 0px; */
   margin-left: -10px !important;
-  /* right: 0px; */
   width: 100%;
   bottom: 0;
   z-index: 1;
@@ -57,10 +34,6 @@
 .chat__chat {
   padding-top: 90px;
   padding-bottom: 90px;
-  /* max-height: 90vh; */
-  /* min-height: 130px; */
-  /* height: auto !important; */
-  /* overflow-y: scroll; */
 }
 .MuiInputBase-root {
   color: #fffffa !important;
@@ -113,6 +86,3 @@
   padding: 8px !important;
   font-weight: 450 !important;
 }
-/* .chat__FlipMove {
-  margin-bottom: 80px;
-} */

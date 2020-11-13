@@ -1,53 +1,18 @@
-import React, {
-  forwardRef,
-  useState,
-  useRef,
-  useEffect,
-  useLayoutEffect,
-  // useLayoutEffect
-} from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  IconButton,
-} from "@material-ui/core";
-import { isMobile } from "react-device-detect";
-import { SVG } from "@svgdotjs/svg.js";
+import React, { forwardRef, useState, useLayoutEffect } from "react";
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import SendIcon from "@material-ui/icons/Send";
-import EditIcon from "@material-ui/icons/Edit";
 import db from "./firebase";
 import animationValues from "./AnimationValues";
 import "./assets/css/Message.css";
-import { Unsubscribe } from "@material-ui/icons";
 
 const Message = forwardRef((props, ref) => {
-  // const blobRef = useRef(null);
-  const [text, setText] = useState(props.message.text);
-  const [editMode, setEditMode] = useState(false);
+  const text = props.message.text;
   const isUser = props.email === props.message.email;
   const [isAnimating, setIsAnimating] = useState(true);
-  const [rendered, setRendered] = useState(false);
-  const updateMessage = (id, text_) => {
-    db.collection("blobs").doc(id).set(
-      {
-        text: text_,
-        edited: true,
-      },
-      { merge: true }
-    );
-    setEditMode(false);
-  };
   const isInViewPort = (ele) => {
-    // const eleBottom = ele.getBoundingClientRect().bottom;
     const eleTop = ele.getBoundingClientRect().top;
     const eleOff = eleTop / 2;
     return eleOff >= -50 && eleOff <= window.innerHeight / 2 - 50;
-    // console.log("eleOff: " + eleOff);
-    // console.log("scrollY: " + window.scrollY);
-    // return eleOff <= window.innerHeight / 2 - 50;
   };
 
   useLayoutEffect(() => {
@@ -56,7 +21,6 @@ const Message = forwardRef((props, ref) => {
         document.querySelector("#blob__" + props.id)
       );
       eleInViewPort ? setIsAnimating(true) : setIsAnimating(false);
-      // eleInViewPort ? console.log(true) : console.log(false);
     };
     document.addEventListener("scroll", bindAnimation);
     return () => document.removeEventListener("scroll", bindAnimation);
@@ -67,9 +31,7 @@ const Message = forwardRef((props, ref) => {
       <div className="message__blob" id={`blob__${props.id}`}>
         <svg
           className="message__blobSvg"
-          // id="message__blobSvg"
           viewBox={`0 0 ${props.message.blobSize} ${props.message.blobSize}`}
-          // viewBox={`0 0 250 250`}
           xmlns="http://www.w3.org/2000/svg"
         >
           <g id={`text__${props.id}`}>
@@ -89,20 +51,7 @@ const Message = forwardRef((props, ref) => {
                 begin={`${Math.random()}s`}
               />
             </path>
-            {/* <text
-              className="message__blobText"
-              dominantBaseline="middle"
-              textAnchor="middle"
-              transform={`translate(${props.message.blobSize / 2}, ${
-                props.message.blobSize / 2
-              })`}
-            ></text> */}
             <foreignObject
-              // x="10"
-              // y="10"
-              // // transform={`translate(-${props.message.blobSize / 2}, -${
-              // //   props.message.blobSize / 2
-              // // })`}
               width={props.message.blobSize - 10}
               height={props.message.blobSize - 10}
             >
@@ -118,76 +67,14 @@ const Message = forwardRef((props, ref) => {
       </div>
       {isUser && (
         <div className="message__options">
-          {/* <IconButton
-            className="message__edit"
-            onClick={(e) => {
-              setEditMode(!editMode);
-            }}
-            >
-            <EditIcon color="primary" />
-          </IconButton> */}
-
           <IconButton
             className="message__delete"
             onClick={() => db.collection("blobs").doc(props.id).delete()}
           >
             <DeleteIcon color="error" />
           </IconButton>
-          {/* <p>{"test\ntest"}</p> */}
         </div>
       )}
-      {/* <p className="message__username">
-        {!isUser && props.message.email}
-        {props.message.edited && !isUser && " (edited)"}
-      </p> */}
-      {/* <center>
-        <p>{props.message.text}</p>
-      </center> */}
-      {/* <Card className={isUser ? "message__userCard" : "message__guestCard"}>
-        <CardContent>
-          {!editMode ? (
-            <Typography
-              color="textPrimary"
-              className={`message__text ${isUser && "message__userText"}`}
-              variant="h6"
-              component="h6"
-            >
-              {text}
-            </Typography>
-          ) : (
-            <form>
-              <TextField
-                value={text}
-                variant="outlined"
-                multiline
-                size="small"
-                onChange={(e) => setText(e.target.value)}
-                onBlur={() => {
-                  updateMessage(props.id, text);
-                }}
-                onKeyPress={(e) => {
-                  if (!isMobile) {
-                    if (!e.shiftKey && e.key === "Enter") {
-                      e.preventDefault();
-                      updateMessage(props.id, text);
-                    }
-                  }
-                }}
-              />
-              <IconButton
-                className="message__iconButton"
-                disabled={!text}
-                variant="contained"
-                color="primary"
-                type="submit"
-                onClick={() => updateMessage(props.id, text)}
-              >
-                <SendIcon />
-              </IconButton>
-            </form>
-          )}
-        </CardContent>
-      </Card> */}
     </div>
   );
 });
