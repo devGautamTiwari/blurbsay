@@ -87,7 +87,6 @@ export default function SignIn() {
       })
       .catch((err) => setError(err));
   };
-  // if (loading) return <Loader />;
   return (
     <Container component="main" className="signin__container" maxWidth="xs">
       <CssBaseline />

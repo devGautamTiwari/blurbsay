@@ -23,11 +23,11 @@ function APP() {
       if (authUser) {
         setUser(authUser);
         setEmail(authUser.email);
-        return <Redirect to="/" />;
+        // return <Redirect to="/" />;
       } else {
         setUser(null);
         setEmail("");
-        return <Redirect to="/signin" />;
+        // return <Redirect to="/signin" />;
       }
     });
     return () => {
@@ -40,7 +40,7 @@ function APP() {
       <Router>
         <Switch>
           <Route exact path="/">
-            {!user ? <Chat /> : <Redirect to="/signin" />}
+            {user ? <Chat /> : <Redirect to="/signin" />}
           </Route>
           <Route exact path="/signin">
             {!user ? <SignIn /> : <Redirect to="/" />}
