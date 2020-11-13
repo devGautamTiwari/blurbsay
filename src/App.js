@@ -10,12 +10,16 @@ import SignIn from "./SignIn";
 import { auth } from "./firebase";
 import { UserProfileProvider, UserProfileContext } from "./UserProfileContext";
 import "./assets/css/App.css";
+import Loader from "./Loader";
 
 function APP() {
-  const [[, setEmail], [user, setUser]] = useContext(UserProfileContext);
+  const [[, setEmail], [user, setUser], [loading, handleLoading]] = useContext(
+    UserProfileContext
+  );
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      handleLoading();
       if (authUser) {
         setUser(authUser);
         setEmail(authUser.email);
@@ -30,9 +34,9 @@ function APP() {
       unsubscribe();
     };
   }, [user]);
-
   return (
     <div className="App">
+      {loading && <Loader />}
       <Router>
         <Switch>
           <Route exact path="/">

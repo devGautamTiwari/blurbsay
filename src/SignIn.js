@@ -13,6 +13,7 @@ import { auth } from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
 import "./assets/css/SignIn.css";
 import { Redirect } from "react-router-dom";
+import Loader from "./Loader";
 
 function Copyright() {
   return (
@@ -48,7 +49,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const [[email, setEmail]] = useContext(UserProfileContext);
+  const [[email, setEmail], , [loading, handleLoading]] = useContext(
+    UserProfileContext
+  );
   const [error, setError] = useState([]);
   const actionCodeSettings = {
     url: "https://blurbsay.web.app/signin",
@@ -56,6 +59,7 @@ export default function SignIn() {
   };
   const [emailSent, setEmailSent] = useState(false);
   useEffect(() => {
+    // handleLoading();
     if (auth.isSignInWithEmailLink(window.location.href)) {
       let email_ = window.localStorage.getItem("emailForSignIn");
       console.log(email);
@@ -76,13 +80,14 @@ export default function SignIn() {
     auth
       .sendSignInLinkToEmail(email, actionCodeSettings)
       .then((authUser) => {
+        handleLoading();
         setError({});
         setEmailSent(true);
         window.localStorage.setItem("emailForSignIn", email);
       })
       .catch((err) => setError(err));
   };
-
+  // if (loading) return <Loader />;
   return (
     <Container component="main" className="signin__container" maxWidth="xs">
       <CssBaseline />

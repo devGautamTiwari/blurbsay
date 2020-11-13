@@ -9,100 +9,54 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase from "firebase";
 import db, { auth } from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
+import { animationClasses, colors } from "./AnimationValues";
 import "./assets/css/Chat.css";
+import Loader from "./Loader";
 
 function Chat() {
   const [input, setInput] = useState("");
-  const [[email]] = useContext(UserProfileContext);
+  const [[email], , [loading, handleLoading]] = useContext(UserProfileContext);
   const [messages, setMessages] = useState([]);
   const [welcomeText, setWelcomeText] = useState("Welcome to BlurbSay!");
+
   setTimeout(() => setWelcomeText("BlurbSay"), 60000);
+
   useEffect(() => {
-    const unsubscribe = db
-      .collection("blobs")
-      .orderBy("timestamp", "desc")
-      .limit(100)
-      .onSnapshot((snapshot) => {
-        setMessages(
-          snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
-        );
-      });
-    return () => unsubscribe();
+    const unsubscribe = () => {
+      // handleLoading();
+      db.collection("blobs")
+        .orderBy("timestamp", "desc")
+        .limit(100)
+        .onSnapshot((snapshot) => {
+          // handleLoading();
+          setMessages(
+            snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
+          );
+        });
+    };
+    return unsubscribe();
   }, []);
 
   const sendMessage = (e) => {
     e.preventDefault();
     if (input) {
-      db.collection("blobs").add({
-        text: input,
-        blobSize: Math.floor(Math.random() * (225 - 175) + 175),
-        blobColor: colors[Math.floor(Math.random() * colors.length)],
-        animationClassName:
-          animationClasses[Math.floor(Math.random() * animationClasses.length)],
-        email: email,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      handleLoading(200);
+      db.collection("blobs")
+        .add({
+          text: input,
+          blobSize: Math.floor(Math.random() * (225 - 175) + 175),
+          blobColor: colors[Math.floor(Math.random() * colors.length)],
+          animationClassName:
+            animationClasses[
+              Math.floor(Math.random() * animationClasses.length)
+            ],
+          email: email,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        .catch((err) => alert(err.message));
       setInput("");
     }
   };
-  const colors = [
-    "#FF0066",
-    "#8A3FFC",
-    "#F1C21B",
-    "#08BDBA",
-    "#0F62FE",
-    "#24A148",
-    "#FA4D56",
-    "#A7F0BA",
-    "#9EF0F0",
-    "#BAE6FF",
-    "#D0E2FF",
-    "#E8DAFF",
-    "#FFD6E8",
-    "#264653",
-    "#2a9d8f",
-    "#e9c46a",
-    "#f4a261",
-    "#e76f51",
-    "#e63946",
-    "#f1faee",
-    "#a8dadc",
-    "#457b9d",
-    "#1d3557",
-    "#fca311",
-    "#14213d",
-    "#03045e",
-    "#00b4d8",
-    "#ffba08",
-    "#d00000",
-    "#e85d04",
-    "#ffafcc",
-    "#6930c3",
-    "#7400b8",
-    "#48bfe3",
-    "#64dfdf",
-    "#80ffdb",
-    "#ef476f",
-    "#ffd166",
-    "#06d6a0",
-    "#e07a5f",
-    "#f72585",
-    "#3a0ca3",
-    "#e2afff",
-    "#fff3b0",
-    "#e09f3e",
-    "#9e2a2b",
-    "#ffff3f",
-    "#fdfffc",
-  ];
-  const animationClasses = [
-    "animation1",
-    "animation2",
-    "animation3",
-    "animation4",
-    "animation5",
-    "animation6",
-  ];
   return (
     <div className="chat__main">
       <div className="chat__welcome">
