@@ -40,7 +40,7 @@ function APP() {
       <Router>
         <Switch>
           <Route exact path="/">
-            {user ? <Chat /> : <Redirect to="/signin" />}
+            {!user ? <Chat /> : <Redirect to="/signin" />}
           </Route>
           <Route exact path="/signin">
             {!user ? <SignIn /> : <Redirect to="/" />}
