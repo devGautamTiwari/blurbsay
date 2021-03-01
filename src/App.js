@@ -19,7 +19,7 @@ function APP() {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      handleLoading();
+      handleLoading(true);
       if (authUser) {
         setUser(authUser);
         setEmail(authUser.email);
@@ -29,6 +29,7 @@ function APP() {
         setEmail("");
         // return <Redirect to="/signin" />;
       }
+      handleLoading(false);
     });
     return () => {
       unsubscribe();

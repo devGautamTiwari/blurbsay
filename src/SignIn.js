@@ -1,68 +1,33 @@
 import React, { useState, useEffect, useContext } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import ErrorIcon from "@material-ui/icons/Error";
 import { auth } from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
 import "./assets/css/SignIn.css";
 import { Redirect } from "react-router-dom";
-import Loader from "./Loader";
+// import Loader from "./Loader";
 
 function Copyright() {
-  return (
-    <Typography variant="body2" align="center">
-      {"Copyright © "}
-      BlurbSay
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
+  return <p>Copyright © BlurbSay {new Date().getFullYear()}.</p>;
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: "#ffffff",
-    color: "#333333",
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
 export default function SignIn() {
-  const classes = useStyles();
-  const [[email, setEmail], , [loading, handleLoading]] = useContext(
+  const [[email, setEmail], , [, handleLoading]] = useContext(
     UserProfileContext
   );
   const [error, setError] = useState([]);
+  const handleError = (err) => {
+    setError(err);
+    setTimeout(() => setError({}), 10000);
+  };
   const actionCodeSettings = {
     url: "https://blurbsay.web.app/signin",
     handleCodeInApp: true,
   };
   const [emailSent, setEmailSent] = useState(false);
   useEffect(() => {
-    // handleLoading();
     if (auth.isSignInWithEmailLink(window.location.href)) {
       let email_ = window.localStorage.getItem("emailForSignIn");
-      console.log(email);
       if (!email_) {
         email_ = prompt("Please provide your email for confirmation");
       }
@@ -72,42 +37,69 @@ export default function SignIn() {
           window.localStorage.removeItem("emailForSignIn");
           return <Redirect to="/" />;
         })
-        .catch((err) => setError(err));
+        .catch((err) => handleError(err));
     }
-  }, []);
+  }, [email]);
   const signIn = (e) => {
     e.preventDefault();
+    handleLoading(true);
     auth
       .sendSignInLinkToEmail(email, actionCodeSettings)
       .then((authUser) => {
-        handleLoading();
         setError({});
         setEmailSent(true);
         window.localStorage.setItem("emailForSignIn", email);
+        handleLoading(false);
       })
-      .catch((err) => setError(err));
+      .catch((err) => {
+        handleError(err);
+        handleLoading(false);
+      });
   };
   return (
-    <Container component="main" className="signin__container" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+    <section className="signIn__container">
+      <header>
+        <span aria-hidden="true" className="signIn__icon__container">
           <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in to BlurbSay
-        </Typography>
-        <Typography color="error">{error.message}</Typography>
-
-        <form className={classes.form}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                className="signin__email"
-                variant="outlined"
-                placeholder="Email Address"
+        </span>
+        <h1>Sign in to BlurbSay</h1>
+      </header>
+      <div>
+        {/* <p className="error">
+          <span aria-hidden="true" className="error__icon">
+            <ErrorIcon />
+          </span>
+          <span className="error__text">
+            A Network Error (Such As Timeout, Interrupted Connection Or
+            Unreachable Host) Has Occurred.
+          </span>
+        </p> */}
+        <p
+          className="error"
+          style={{
+            display: `${error.message ? "flex" : "none"}`,
+            height: "auto",
+          }}
+          aria-hidden={error.message ? false : true}
+        >
+          <span aria-hidden="true" className="error__icon">
+            <ErrorIcon />
+          </span>
+          <span className="error__text">{error.message}</span>
+        </p>
+        <form
+          className="signIn__form"
+          onSubmit={(e) => {
+            signIn(e);
+          }}
+        >
+          <div>
+            <div>
+              <input
+                type="email"
+                className="signIn__email"
+                placeholder="Enter your email address"
                 required
-                fullWidth
                 id="email"
                 name="email"
                 value={email}
@@ -115,26 +107,23 @@ export default function SignIn() {
                   setEmail(e.target.value);
                 }}
                 autoComplete="email"
-                autoFocus
               />
-            </Grid>
-            <Button
-              className="signin__button"
+            </div>
+            <button
+              className="signIn__button"
               type="submit"
-              fullWidth
-              variant="contained"
-              onClick={(e) => {
-                signIn(e);
-              }}
+              // onClick={(e) => {
+              //   signIn(e);
+              // }}
             >
               {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
-            </Button>
-          </Grid>
+            </button>
+          </div>
         </form>
       </div>
-      <Box mt={8}>
+      <div className="copyright">
         <Copyright />
-      </Box>
-    </Container>
+      </div>
+    </section>
   );
 }

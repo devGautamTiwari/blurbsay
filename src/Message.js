@@ -46,7 +46,7 @@ const Message = forwardRef((props, ref) => {
                 values={animationValues[props.message.animationClassName]}
                 keyTimes="0; 0.2; 0.4; 0.6; 0.8; 1"
                 calcMode="paced"
-                dur={isAnimating ? "2s" : "0s"}
+                dur={isAnimating ? "5.5s" : "0s"}
                 repeatCount="indefinite"
                 begin={`${Math.random()}s`}
               />

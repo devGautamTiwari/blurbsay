@@ -4,9 +4,17 @@
   --backgroundColor: #ffffff;
   --guestMessageColor: #392061;
 }
-fieldset {
-  border-color: white !important;
+h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.022em;
 }
+input {
+  outline: none !important;
+}
+/* fieldset {
+  border-color: white !important;
+} */
 body {
   font-family: "Roboto", sans-serif;
   background-color: var(--backgroundColor) !important;

@@ -8,9 +8,8 @@ const UserProfileProvider = (props) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const handleLoading = (milliseconds = 2000) => {
-    setLoading(true);
-    setTimeout(() => setLoading(false), milliseconds);
+  const handleLoading = (isLoading) => {
+    setLoading(isLoading);
   };
   // const [activeComponent, setActiveComponent] = useState("SignIn");
   // const [canAccess, setCanAccess] = useState(false);

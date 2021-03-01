@@ -16,23 +16,57 @@ import Loader from "./Loader";
 function Chat() {
   const [input, setInput] = useState("");
   const [[email], , [loading, handleLoading]] = useContext(UserProfileContext);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      message: {
+        text: "hello",
+        email: "gautam03gt@gmail.com",
+        blobColor: "#fdae78",
+        blobSize: 200,
+        animationClassName: "animation1",
+        timestamp: 1,
+      },
+    },
+    {
+      id: 2,
+      message: {
+        text: "hey",
+        email: "gautam3gt@gmail.com",
+        blobColor: "#cd2a98",
+        blobSize: 200,
+        animationClassName: "animation2",
+        timestamp: 2,
+      },
+    },
+    {
+      id: 3,
+      message: {
+        text: "hey guys",
+        email: "gautamgt@gmail.com",
+        blobColor: "#a0a0f0",
+        blobSize: 210,
+        animationClassName: "animation3",
+        timestamp: 3,
+      },
+    },
+  ]);
   const [welcomeText, setWelcomeText] = useState("Welcome to BlurbSay!");
 
   setTimeout(() => setWelcomeText("BlurbSay"), 60000);
 
   useEffect(() => {
     const unsubscribe = () => {
-      // handleLoading();
+      handleLoading(true);
       db.collection("blobs")
         .orderBy("timestamp", "desc")
         .limit(100)
         .onSnapshot((snapshot) => {
-          // handleLoading();
           setMessages(
             snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
           );
         });
+      handleLoading(false);
     };
     return unsubscribe();
   }, []);
@@ -60,13 +94,7 @@ function Chat() {
   return (
     <div className="chat__main">
       <div className="chat__welcome">
-        <h2
-          style={{
-            marginLeft: "18px",
-          }}
-        >
-          {welcomeText}
-        </h2>
+        <h2 className="chat__welcomeText">{welcomeText}</h2>
         <Link
           className="chat__signout"
           onClick={() => {

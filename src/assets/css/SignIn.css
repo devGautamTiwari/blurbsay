@@ -1,14 +1,121 @@
-.signin__container {
-  background: var(--userMessageColor) !important;
-  color: aliceblue;
+/* .signIn__container::before {
+  content: "";
+  width: 100%;
+  height: 200%;
+  border-radius: 0px;
+  background: #ff23e0;
+} */
+.signIn__container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  max-width: 472px;
+  width: 100%;
+  min-width: 384px;
+  background: hsl(90, 100%, 30%);
+  color: #fff;
   border-radius: 1.35em;
-  padding-bottom: 20px !important;
+  padding: 20px 20px 50px;
+  box-shadow: 0px 17px 30px rgba(30, 30, 40, 0.6);
 }
-.signin__email * {
-  color: #fffffa !important;
+
+.signIn__icon__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 5px;
+  max-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  background-color: hsl(51, 100%, 50%);
+  color: #2d2d2d;
 }
-.signin__button {
-  margin: 5px !important;
-  background-color: #ffffff !important;
-  color: #333333 !important;
+
+.signIn__email {
+  min-height: 20px;
+  line-height: 1.4rem;
+  padding: 8px;
+  border-radius: 3px;
+  border-width: 0px;
+  width: 100%;
+  max-width: 230px;
+  box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.4);
+  font-size: 90%;
+}
+.signIn__email:focus {
+  box-shadow: 0px 0px 5px 3px rgba(205, 255, 205, 0.5);
+}
+
+.signIn__button {
+  min-height: 40px;
+  width: 100%;
+  max-width: 200px;
+  margin-block-start: 20px;
+  outline: none;
+  padding: 0.8rem;
+  border-width: 0px;
+  border-radius: 3px;
+  background-color: hsl(50, 100%, 50%);
+  text-transform: uppercase;
+  box-shadow: 0px 4px 20px 0px rgba(20, 20, 20, 0.4);
+  transition: border-radius 800ms linear;
+}
+.signIn__button:hover {
+  /* border-radius: 24px; */
+  transform: translateY(3px);
+  background-color: hsl(50, 100%, 47%);
+  box-shadow: 0px 4px 22px rgba(20, 20, 20, 0.3);
+}
+.signIn__button:focus {
+  transform: translateY(3px);
+  background-color: hsl(50, 100%, 47%);
+  box-shadow: 0px 4px 22px rgba(20, 20, 20, 0.45);
+}
+
+.copyright {
+  margin-top: 65px;
+  margin-bottom: -38px;
+}
+
+.error {
+  display: flex;
+  position: relative;
+  align-items: center;
+  background-color: rgb(210, 50, 0);
+  min-height: 18px;
+  margin: 15px auto;
+  padding: 15px 0px;
+  width: 90%;
+  min-width: 30%;
+  box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+}
+
+.error__text {
+  display: block;
+  text-align: center;
+  text-transform: capitalize;
+  font-weight: 400;
+  margin-right: 24px;
+  width: 100%;
+  font-size: 95%;
+}
+
+.error__icon {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+}
+
+@media only screen and (max-width: 532px) {
+  .signIn__container {
+    padding: 20px 8px 30px;
+  }
+  .error {
+    margin: 10px auto;
+    /* margin-left: -8px; */
+    width: 90%;
+  }
 }
