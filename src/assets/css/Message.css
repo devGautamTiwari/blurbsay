@@ -1,34 +1,47 @@
 .message {
-  padding: 10px;
-  margin: 5px 10px;
-  text-align: left;
-  align-items: center !important;
-}
-.message__blob * {
-  color: var(--userMessageColor) !important;
-}
-.message__user {
-  text-align: left !important;
+  box-shadow: 0 7px 15px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 0 7px 18px rgba(0, 0, 250, 0.4); */
+  border-radius: 1.2em;
+  max-width: 500px;
 }
 
-.message__user > .message__blob > .message__blobSvg {
-  background-color: #f9f9f9;
+.message__blob {
   border-radius: 1.2em;
+  background-color: #fdfbe7;
+  background-color: #fefefe;
+  /* box-shadow: 0 7px 25px rgba(0, 0, 0, 0.5); */
 }
+
+.message__self {
+  /* text-align: left; */
+}
+
+.message__self > .message__blob {
+  background-color: #fefefe;
+  background-color: #fdfbe7;
+
+  /* border-radius: 1.2em; */
+}
+
+/* .message__other > .message__blob {
+  background-color: #fdfbe7;
+} */
+
 .message__options {
-  float: left;
   opacity: 0;
-  margin-bottom: 10px;
-  transition: all 50ms linear;
+  display: none;
+  position: absolute;
+  transition: all 50ms ease-out;
+  margin-top: -36px;
 }
 .message__text {
-  font-size: 18px !important;
-  line-height: 1.3em !important ;
-  font-weight: 400 !important;
-  color: #ffffff !important;
+  font-size: 18px;
+  line-height: 1.3em;
+  font-weight: 400;
+  color: #ffffff;
 }
 .message__userText {
-  color: #113654 !important;
+  color: #113654;
 }
 .message__username {
   margin: 0px 1px;
@@ -40,30 +53,26 @@
 }
 
 .message__userCard {
-  border-radius: 1.2em !important;
-  background-color: var(--userMessageColor) !important;
-  width: fit-content;
+  border-radius: 1.2em;
 }
 
 .message__guestCard {
-  width: fit-content;
-  border-radius: 1.2em !important;
-  background-color: var(--guestMessageColor) !important;
-}
-.message__delete > span > svg {
-  color: #000000bb !important;
+  border-radius: 1.2em;
 }
 
 .message__delete,
 .message__edit {
-  padding: 2px !important;
+  padding: 4px;
+  border-width: 0;
+  border-bottom-left-radius: 1.2em;
+  background-color: #ededff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
 }
-.message__user:hover > .message__options {
-  opacity: 0.8;
+.message__self:hover > .message__options {
+  opacity: 1;
+  display: block;
 }
 .message__iconButton {
-  flex: 0 !important;
-  margin-right: 20px !important;
 }
 foreignObject {
   padding: 10px;
@@ -71,19 +80,21 @@ foreignObject {
 .message__blobText {
   text-anchor: middle;
   text-align: center;
-  white-space: pre-wrap !important;
+  white-space: pre-wrap;
   z-index: 2;
   display: flex;
   position: relative;
-  top: 25%;
+  /* transform: translateY(-25%); */
+  top: 24%;
   justify-content: center;
+  text-shadow: 0 0 0 #0c2ffb, 0 0 0 #2cfcfd, 0 0 0 #fb203b, 0 0 0 #fefc4b;
 
-  animation: textShadow 1.2s infinite ease-in-out paused,
-    floating 3s infinite ease-in-out running;
-  font-size: 13px !important;
+  animation: floating 3s infinite ease-out running;
+  /* textShadow 1.2s infinite ease-in-out paused; */
+  font-size: 0.85rem;
 }
 .message__blobSvg:hover .message__blobText {
-  animation-play-state: running, paused;
+  animation-play-state: paused;
 }
 
 @keyframes floating {
@@ -98,39 +109,9 @@ foreignObject {
   }
 }
 
-@keyframes textShadow {
-  0% {
-    transform: translateY(50%);
-    text-shadow: 0 0 0 #0c2ffb, 0 0 0 #2cfcfd, 0 0 0 #fb203b, 0 0 0 #fefc4b;
-  }
-
-  25% {
-    transform: translateY(42%);
-    text-shadow: 0 0.125em 0 #0c2ffb, 0 0.25em 0 #2cfcfd, 0 -0.125em 0 #fb203b,
-      0 -0.25em 0 #fefc4b;
-  }
-
-  50% {
-    transform: translateY(40%);
-    text-shadow: 0 -0.0625em 0 #0c2ffb, 0 -0.125em 0 #2cfcfd,
-      0 0.0625em 0 #fb203b, 0 0.125em 0 #fefc4b;
-  }
-
-  75% {
-    transform: translateY(42%);
-    text-shadow: 0 0.03125em 0 #0c2ffb, 0 0.0625em 0 #2cfcfd,
-      0 -0.03125em 0 #fb203b, 0 -0.0625em 0 #fefc4b;
-  }
-
-  100% {
-    transform: translateY(50%);
-    text-shadow: 0 0 0 #0c2ffb, 0 0 0 #2cfcfd, 0 0 0 #fb203b, 0 0 0 #fefc4b;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   * {
-    animation: none !important;
-    transition: none !important;
+    animation: none;
+    transition: none;
   }
 }

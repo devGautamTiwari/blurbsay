@@ -1,7 +1,6 @@
 import React, { forwardRef, useState, useLayoutEffect } from "react";
-import { IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import db from "./firebase";
+import DeleteIcon from "@material-ui/icons/Delete";
 import animationValues from "./AnimationValues";
 import "./assets/css/Message.css";
 
@@ -12,9 +11,8 @@ const Message = forwardRef((props, ref) => {
   const isInViewPort = (ele) => {
     const eleTop = ele.getBoundingClientRect().top;
     const eleOff = eleTop / 2;
-    return eleOff >= -50 && eleOff <= window.innerHeight / 2 - 50;
+    return eleOff >= -80 && eleOff <= window.innerHeight / 2 - 80;
   };
-
   useLayoutEffect(() => {
     const bindAnimation = () => {
       const eleInViewPort = isInViewPort(
@@ -27,7 +25,12 @@ const Message = forwardRef((props, ref) => {
   }, []);
 
   return (
-    <div ref={ref} className={`message ${isUser && "message__user"}`}>
+    <div
+      ref={ref}
+      className={`message${props.className ? " " + props.className : ""}${
+        isUser ? " message__self" : " message__other"
+      }`}
+    >
       <div className="message__blob" id={`blob__${props.id}`}>
         <svg
           className="message__blobSvg"
@@ -44,7 +47,7 @@ const Message = forwardRef((props, ref) => {
               <animate
                 attributeName="d"
                 values={animationValues[props.message.animationClassName]}
-                keyTimes="0; 0.2; 0.4; 0.6; 0.8; 1"
+                keyTimes="0; 0.3; 0.4; 0.6; 0.9; 1"
                 calcMode="paced"
                 dur={isAnimating ? "5.5s" : "0s"}
                 repeatCount="indefinite"
@@ -59,7 +62,7 @@ const Message = forwardRef((props, ref) => {
                 xmlns="http://www.w3.org/1999/xhtml"
                 className="message__blobText"
               >
-                {text}
+                {text.trim()}
               </p>
             </foreignObject>
           </g>
@@ -67,12 +70,12 @@ const Message = forwardRef((props, ref) => {
       </div>
       {isUser && (
         <div className="message__options">
-          <IconButton
+          <button
             className="message__delete"
             onClick={() => db.collection("blobs").doc(props.id).delete()}
           >
             <DeleteIcon color="error" />
-          </IconButton>
+          </button>
         </div>
       )}
     </div>

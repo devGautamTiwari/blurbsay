@@ -1,0 +1,59 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  background-color: var(--primaryGreen);
+  background-image: linear-gradient(
+    90deg,
+    var(--primaryGreen),
+    var(--primaryGreen),
+    #000000,
+    #000000
+  );
+  color: #fffffa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+.header__welcomeText {
+  padding-left: 20px;
+}
+
+.header__signout {
+  max-height: 28px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 20px;
+  display: flex;
+  color: var(--userMessageColor);
+  text-decoration-line: none;
+  background: var(--mainBackgroundColor);
+  border-radius: 1.35em;
+  padding: 8px;
+  font-weight: 450;
+}
+
+.header__signout__text {
+  overflow: hidden;
+  max-width: 0;
+  position: relative;
+  white-space: nowrap;
+  transition: max-width 400ms ease-in-out;
+}
+.header__signout:hover .header__signout__text {
+  max-width: 250px;
+}
+
+.header__signout__btn {
+  display: flex;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.header__signout__btn:focus {
+  outline: none;
+}
+
+.header__signout__icon {
+}
