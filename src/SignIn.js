@@ -93,32 +93,29 @@ export default function SignIn() {
             signIn(e);
           }}
         >
-          <div>
-            <div>
-              <input
-                type="email"
-                className="signIn__email"
-                placeholder="Enter your email address"
-                required
-                id="email"
-                name="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                autoComplete="email"
-              />
-            </div>
-            <button
-              className="signIn__button"
-              type="submit"
-              // onClick={(e) => {
-              //   signIn(e);
-              // }}
-            >
-              {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
-            </button>
-          </div>
+          <input
+            type="email"
+            className="signIn__email"
+            placeholder="Enter your email address"
+            required
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            autoComplete="email"
+          />
+
+          <button
+            className="signIn__button"
+            type="submit"
+            // onClick={(e) => {
+            //   signIn(e);
+            // }}
+          >
+            {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
+          </button>
         </form>
       </div>
       <div className="copyright">

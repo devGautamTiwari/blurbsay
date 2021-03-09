@@ -41,7 +41,7 @@ footer {
   background-color: #fefeff;
   color: hsl(90, 100%, 10%);
   box-shadow: 0px 10px 20px rgba(30, 30, 30, 0.4);
-  outline-color: hsl(90, 100%, 40%);
+  /* outline-color: hsl(90, 100%, 40%); */
 }
 .footer__input:focus {
   outline-color: hsl(90, 100%, 40%);
