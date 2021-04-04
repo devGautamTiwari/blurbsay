@@ -57,15 +57,16 @@ export default function SignIn() {
       });
   };
   return (
-    <section className="signIn__container">
-      <header>
-        <span aria-hidden="true" className="signIn__icon__container">
-          <LockOutlinedIcon />
-        </span>
-        <h1>Sign in to BlurbSay</h1>
-      </header>
-      <div>
-        {/* <p className="error">
+    <div className="signin">
+      <section className="signin__container">
+        <header>
+          <span aria-hidden="true" className="signin__icon__container">
+            <LockOutlinedIcon />
+          </span>
+          <h1>BlurbSay</h1>
+        </header>
+        <div>
+          {/* <p className="error">
           <span aria-hidden="true" className="error__icon">
             <ErrorIcon />
           </span>
@@ -74,53 +75,55 @@ export default function SignIn() {
             Unreachable Host) Has Occurred.
           </span>
         </p> */}
-        <p
-          className="error"
-          style={{
-            display: `${error.message ? "flex" : "none"}`,
-            height: "auto",
-          }}
-          aria-hidden={error.message ? false : true}
-        >
-          <span aria-hidden="true" className="error__icon">
-            <ErrorIcon />
-          </span>
-          <span className="error__text">{error.message}</span>
-        </p>
-        <form
-          className="signIn__form"
-          onSubmit={(e) => {
-            signIn(e);
-          }}
-        >
-          <input
-            type="email"
-            className="signIn__email"
-            placeholder="Enter your email address"
-            required
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
+          <p
+            className="error"
+            style={{
+              display: `${error.message ? "flex" : "none"}`,
+              height: "auto",
             }}
-            autoComplete="email"
-          />
-
-          <button
-            className="signIn__button"
-            type="submit"
-            // onClick={(e) => {
-            //   signIn(e);
-            // }}
+            aria-hidden={error.message ? false : true}
           >
-            {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
-          </button>
-        </form>
-      </div>
-      <div className="copyright">
-        <Copyright />
-      </div>
-    </section>
+            <span aria-hidden="true" className="error__icon">
+              <ErrorIcon />
+            </span>
+            <span className="error__text">{error.message}</span>
+          </p>
+          <form
+            className="signin__form"
+            onSubmit={(e) => {
+              signIn(e);
+            }}
+          >
+            <h3>Sign In</h3>
+            <input
+              type="email"
+              className="signin__email"
+              placeholder="Enter your email address"
+              required
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              autoComplete="email"
+            />
+
+            <button
+              className="signin__button"
+              type="submit"
+              // onClick={(e) => {
+              //   signIn(e);
+              // }}
+            >
+              {emailSent ? "Link Sent. Send Again?" : "Get Sign In Link"}
+            </button>
+          </form>
+        </div>
+        <div className="copyright">
+          <Copyright />
+        </div>
+      </section>
+    </div>
   );
 }

@@ -45,8 +45,7 @@ export const colors = [
   "#fff3b0",
   "#e09f3e",
   "#9e2a2b",
-  "#ffff3f",
-  "#fdfffc",
+  "#ffdf3f",
 ];
 export const animationClasses = [
   "animation1",

@@ -1,17 +1,77 @@
 .loader {
   padding: 0;
   margin: 0;
-  width: 1000vw;
-  height: 100vh;
-  position: fixed;
-  z-index: 99;
-  background-color: var(--mainBackgroundColor);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: inherit;
+  /* position: relative; */
+  z-index: 5;
 }
-.loader__icon {
+.loader__loading {
+  background-color: var(--mainBackgroundColor);
+  z-index: 5;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   padding: 0;
-  position: fixed;
-  top: calc(50% - 20px);
-  left: calc(50% - 20px);
-  color: var(--userMessageColor) !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.loader__loadingtext {
+  font-size: 110%;
+}
+.dot-typing {
+  --dot-color: #000;
+  display: block;
+  position: relative;
+  margin-top: -1.12ch;
+  margin-left: 7.8ch;
+  left: -9999px;
+  width: 4px;
+  height: 4px;
+  border-radius: 5px;
+  box-shadow: 9990px 0 0 0 var(--dot-color), 9999px 0 0 0 var(--dot-color),
+    10008px 0 0 0 var(--dot-color);
+  animation: dotTyping 1.2s infinite ease-in-out;
+}
+
+@keyframes dotTyping {
+  0% {
+    box-shadow: 9990px 0 0 0 var(--dot-color), 9999px 0 0 0 var(--dot-color),
+      10008px 0 0 0 var(--dot-color);
+  }
+  16.667% {
+    box-shadow: 9990px -0.7ch 0 0 var(--dot-color),
+      9999px 0 0 0 var(--dot-color), 10008px 0 0 0 var(--dot-color);
+  }
+  /* 33.333% {
+    box-shadow: 9990px 0 0 0 var(--dot-color), 9999px 0 0 0 var(--dot-color),
+      10008px 0 0 0 var(--dot-color);
+  } */
+  50%,
+  54% {
+    box-shadow: 9990px 0 0 0 var(--dot-color),
+      9999px -0.7ch 0 0 var(--dot-color), 10008px 0 0 0 var(--dot-color);
+  }
+  /* 66.667% {
+    box-shadow: 9990px 0 0 0 var(--dot-color), 9999px 0 0 0 var(--dot-color),
+      10008px 0 0 0 var(--dot-color);
+  } */
+  83.333% {
+    box-shadow: 9990px 0 0 0 var(--dot-color), 9999px 0 0 0 var(--dot-color),
+      10008px -0.7ch 0 0 var(--dot-color);
+  }
+  100% {
+    box-shadow: 9990px 0 0 0 var(--dot-color), 9999px 0 0 0 var(--dot-color),
+      10008px 0 0 0 var(--dot-color);
+  }
 }

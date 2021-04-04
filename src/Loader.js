@@ -5,7 +5,13 @@ import "./assets/css/Loader.css";
 const Loader = () => {
   return (
     <div className="loader">
-      <CircularProgress className="loader__icon" />
+      <span className="loader__loading">
+        <CircularProgress style={{ color: "var(--primaryGreen)" }} />
+        <p className="loader__loadingtext">
+          Loading
+          <span className="dot-typing"></span>
+        </p>
+      </span>
     </div>
   );
 };

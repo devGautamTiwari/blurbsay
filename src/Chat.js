@@ -45,7 +45,7 @@ function Chat() {
     {
       id: 4,
       message: {
-        text: "niccccccee!",
+        text: "nicccccceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!",
         email: "",
         blobColor: "#0faffa",
         blobSize: 210,

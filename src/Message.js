@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useLayoutEffect } from "react";
-import db from "./firebase";
-import DeleteIcon from "@material-ui/icons/Delete";
+// import db from "./firebase";
+// import DeleteIcon from "@material-ui/icons/Delete";
 import animationValues from "./AnimationValues";
 import "./assets/css/Message.css";
 
@@ -54,10 +54,7 @@ const Message = forwardRef((props, ref) => {
                 begin={`${Math.random()}s`}
               />
             </path>
-            <foreignObject
-              width={props.message.blobSize - 10}
-              height={props.message.blobSize - 10}
-            >
+            <foreignObject>
               <p
                 xmlns="http://www.w3.org/1999/xhtml"
                 className="message__blobText"
@@ -68,16 +65,6 @@ const Message = forwardRef((props, ref) => {
           </g>
         </svg>
       </div>
-      {isUser && (
-        <div className="message__options">
-          <button
-            className="message__delete"
-            onClick={() => db.collection("blobs").doc(props.id).delete()}
-          >
-            <DeleteIcon color="error" />
-          </button>
-        </div>
-      )}
     </div>
   );
 });

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import firebase from "firebase";
 import db from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
@@ -9,6 +9,7 @@ import "./assets/css/Footer.css";
 
 const Footer = () => {
   const [input, setInput] = useState("");
+  const inputField = useRef(null);
   const [[email], , [, handleLoading]] = useContext(UserProfileContext);
 
   const sendMessage = (e) => {
@@ -24,13 +25,16 @@ const Footer = () => {
             animationClasses[
               Math.floor(Math.random() * animationClasses.length)
             ],
-          email: email,
+          email,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => handleLoading(false))
-        .catch((err) => alert(err.message));
+        .catch((err) => {
+          alert(err.message);
+          handleLoading(false);
+        });
       setInput("");
-      e.target.innerText = "";
+      inputField.current.innerText = "";
     }
   };
 
@@ -40,16 +44,17 @@ const Footer = () => {
         <div
           className="footer__input"
           placeholder="Type a message..."
-          // value={input}
+          ref={inputField}
           onInput={(e) => setInput(e.target.innerText.trim())}
-          onKeyPress={(e) => {
-            if (!isMobile) {
+          onKeyPress={
+            !isMobile &&
+            ((e) => {
               if (!e.shiftKey && e.key === "Enter") {
                 e.preventDefault();
                 sendMessage(e);
               }
-            }
-          }}
+            })
+          }
           autoFocus
           contentEditable
         />
